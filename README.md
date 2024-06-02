@@ -4,6 +4,7 @@
 
 ## Roadmap & TODOs
 - Provide mazes with rooms
+- Provide more Algorithms (Aldous-Broder, Eller's, Growing Tree, Hunt-and-Kill, Kruskal's, Recursive Backtracker, Prim's, Wilson's)
 - Provide googletests
 - Provide solving algorithm for the mazes (Dijkstra, A*, RRT, ...?)
 
