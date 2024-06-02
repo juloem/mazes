@@ -25,20 +25,23 @@
 #ifndef GRID_HPP
 #define GRID_HPP
 
-#include "cell.hpp"
+#include <png.h>
+
 #include <cstdlib>
 #include <functional>
 #include <string>
 #include <iostream>
-#include <png.h>
+#include <vector>
+
+#include "cell.hpp"
 
 class Grid {
-  private:
+ private:
     int rows; /**< The number of rows in the grid. */
     int columns; /**< The number of columns in the grid. */
     std::vector<std::vector<Cell*>> grid; /**< The 2D vector representing the grid of cells. */
 
-  public:
+ public:
     /**
      * @brief Constructs a Grid object with the specified number of rows and columns.
      * @param rows The number of rows in the grid.
@@ -118,4 +121,4 @@ class Grid {
     void generateImage(const std::string& filename, int cellSize, int wallSize = 1);
 };
 
-#endif // GRID_HPP
+#endif  // GRID_HPP

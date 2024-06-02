@@ -33,12 +33,12 @@
  * @brief Represents a cell in a maze grid.
  */
 class Cell {
-  private:
+ private:
     int row_; /**< The row index of the cell in the grid. */
     int column_; /**< The column index of the cell in the grid. */
     std::unordered_map<Cell*, bool> links_; /**< A map of linked cells and their link status. */
 
-  public:
+ public:
     Cell* north_; /**< Pointer to the cell to the north of this cell. */
     Cell* south_; /**< Pointer to the cell to the south of this cell. */
     Cell* east_; /**< Pointer to the cell to the east of this cell. */
@@ -90,4 +90,4 @@ class Cell {
     std::vector<Cell*> getNeighbors();
 };
 
-#endif // CELL_HPP
+#endif  // CELL_HPP

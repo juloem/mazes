@@ -113,13 +113,12 @@ std::string Grid::to_s_v1() {
 
   std::cout << output;
   return output;
-
   }
 
 void Grid::drawWall(int x1, int x2, int y1, int y2, int wallSize, png_bytep* rowPointers, bool isVertical) {
     if (isVertical) {
         for (int y = y1; y < y2; y++) {
-            for(int t = 0; t < wallSize; t++) {
+            for (int t = 0; t < wallSize; t++) {
                 if (x1 - t >= 0) {
                     rowPointers[y][(x1 - t - 1) * 3] = 0;
                     rowPointers[y][(x1 - t - 1) * 3 + 1] = 0;
@@ -129,7 +128,7 @@ void Grid::drawWall(int x1, int x2, int y1, int y2, int wallSize, png_bytep* row
         }
     } else {
         for (int x = x1; x < x2; x++) {
-            for(int t = 0; t < wallSize; t++) {
+            for (int t = 0; t < wallSize; t++) {
                 rowPointers[y1 + t][x * 3] = 0;
                 rowPointers[y1 + t][x * 3 + 1] = 0;
                 rowPointers[y1 + t][x * 3 + 2] = 0;
