@@ -30,6 +30,7 @@ add_library(MazeLib
   src/grid.hpp
   src/grid.cpp
   src/binary_tree.cpp
+  src/sidewinder.hpp
   src/sidewinder.cpp
 )
 

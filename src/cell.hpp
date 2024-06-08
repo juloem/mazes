@@ -22,8 +22,8 @@
  * SOFTWARE.
  */
 
-#ifndef CELL_HPP
-#define CELL_HPP
+#ifndef SRC_CELL_HPP
+#define SRC_CELL_HPP
 
 #include <unordered_map>
 #include <vector>
@@ -90,4 +90,4 @@ class Cell {
     std::vector<Cell*> getNeighbors();
 };
 
-#endif  // CELL_HPP
+#endif  // SRC_CELL_HPP
