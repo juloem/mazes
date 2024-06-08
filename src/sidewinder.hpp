@@ -22,39 +22,37 @@
  * SOFTWARE.
  */
 
-#include "binary_tree.cpp"
-#include "sidewinder.cpp"
+#ifndef SIDEWINDER_HPP
+#define SIDEWINDER_HPP
+
+#include <vector>
+
+#include "grid.hpp"
 
 /**
- * @brief The main function of the program.
+ * @class Sidewinder
+ * @brief Class representing the Sidewinder algorithm for generating mazes.
  *
- * This function creates a grid of size rowsxcolumns and applies sidewinder algorithm to generate a maze.
- * The maze is then printed to the console and an image of the maze is generated.
+ * The Sidewinder algorithm is a maze generation algorithm that creates mazes with a bias
+ * towards vertical passages.
+ * It works by iterating over each row of cells in the grid and randomly carving passages
+ * either to the east or to the north.  * When a passage is carved to the north, it forms
+ * a "run" of cells. At the end of each run, a random cell is chosen and linked to its
+ * northern neighbor. This process continues until all cells have been visited.
  *
- * @return 0 indicating successful execution of the program.
+ * The Sidewinder class provides a static method `on` that takes a Grid object as input
+ * and generates a maze using the Sidewinder algorithm. The generated maze is returned as
+ * a Grid object.
  */
-int main() {
-  // Predetermined values for the maze
-  int rows = 2;
-  int columns = 2;
-  int cellSize = 100;
-  int wallSize = 10;
-  std::string filename = "maze.png";
+class Sidewinder {
+public:
+    /**
+   * Generates a maze using the Sidewinder algorithm on the given grid.
+   *
+   * @param grid The grid on which the maze is generated.
+   * @return The grid with the generated maze.
+   */
+  static Grid on(Grid grid);
+};
 
-  // Create a grid of size rowsxcolumns
-  Grid grid(rows, columns);
-  Grid ouput_grid(rows, columns);
-
-  // BinaryTree::on(grid);
-
-  // Generate a maze using the Sidewinder algorithm
-  ouput_grid = Sidewinder::on(grid);
-
-  // Print the maze to the console and generate an image of the maze
-  ouput_grid.to_s_v1();
-  std::cout << "Sidewinder Algorithm finished successfully" << std::endl;
-  ouput_grid.generateImage(filename, cellSize, wallSize);
-  std::cout << "Image generated successfully" << std::endl;
-
-  return 0;
-}
+#endif // SIDEWINDER_HPP

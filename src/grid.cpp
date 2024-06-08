@@ -113,7 +113,7 @@ std::string Grid::to_s_v1() {
 
   std::cout << output;
   return output;
-  }
+}
 
 void Grid::drawWall(int x1, int x2, int y1, int y2, int wallSize, png_bytep* rowPointers, bool isVertical) {
     if (isVertical) {
@@ -137,87 +137,87 @@ void Grid::drawWall(int x1, int x2, int y1, int y2, int wallSize, png_bytep* row
     }
 }
 
-  void Grid::generateImage(const std::string& filename, int cellSize, int wallSize) {
-    int imageWidth = columns * cellSize;
-    int imageHeight = rows * cellSize;
+void Grid::generateImage(const std::string& filename, int cellSize, int wallSize) {
+  int imageWidth = columns * cellSize;
+  int imageHeight = rows * cellSize;
 
-    png_bytep* rowPointers = new png_bytep[imageHeight];
-    for (int i = 0; i < imageHeight; i++) {
-      rowPointers[i] = new png_byte[imageWidth * 3];
-      // Initialize all pixels to white
-      std::fill_n(rowPointers[i], imageWidth * 3, 255);
-    }
+  png_bytep* rowPointers = new png_bytep[imageHeight];
+  for (int i = 0; i < imageHeight; i++) {
+    rowPointers[i] = new png_byte[imageWidth * 3];
+    // Initialize all pixels to white
+    std::fill_n(rowPointers[i], imageWidth * 3, 255);
+  }
 
-    for (int row = 0; row < rows; row++) {
-      for (int column = 0; column < columns; column++) {
-        Cell* cell = grid[row][column];
-        int x1 = column * cellSize;
-        int y1 = row * cellSize;
-        int x2 = (column + 1) * cellSize;
-        int y2 = (row + 1) * cellSize;
+  for (int row = 0; row < rows; row++) {
+    for (int column = 0; column < columns; column++) {
+      Cell* cell = grid[row][column];
+      int x1 = column * cellSize;
+      int y1 = row * cellSize;
+      int x2 = (column + 1) * cellSize;
+      int y2 = (row + 1) * cellSize;
 
-        if (!cell->isLinked(cell->north_)) {
-          drawWall(x1, x2, y1, y1 + wallSize, wallSize, rowPointers, false);
-        }
+      if (!cell->isLinked(cell->north_)) {
+        drawWall(x1, x2, y1, y1 + wallSize, wallSize, rowPointers, false);
+      }
 
-        if (!cell->isLinked(cell->west_)) {
-          drawWall(x1, x1 + wallSize, y1, y2, wallSize, rowPointers, true);
-        }
+      if (!cell->isLinked(cell->west_)) {
+        drawWall(x1, x1 + wallSize, y1, y2, wallSize, rowPointers, true);
+      }
 
-        // Draw east wall only if it's the last column and if the cell is not linked to its eastern neighbor
-        if (column == columns - 1 && !cell->isLinked(cell->east_)) {
-          drawWall(x2, x2, y1, y2, wallSize, rowPointers, true);
-        }
+      // Draw east wall only if it's the last column and if the cell is not linked to its eastern neighbor
+      if (column == columns - 1 && !cell->isLinked(cell->east_)) {
+        drawWall(x2, x2, y1, y2, wallSize, rowPointers, true);
+      }
 
-        // Draw south wall only if it's the last row and if the cell is not linked to its southern neighbor
-        if (row == rows - 1 && !cell->isLinked(cell->south_)) {
-          drawWall(x1, x2, y2 - wallSize, y2, wallSize, rowPointers, false);
-        }
+      // Draw south wall only if it's the last row and if the cell is not linked to its southern neighbor
+      if (row == rows - 1 && !cell->isLinked(cell->south_)) {
+        drawWall(x1, x2, y2 - wallSize, y2, wallSize, rowPointers, false);
       }
     }
+  }
 
-    // Error handling
-    FILE* file = fopen(filename.c_str(), "wb");
-    if (!file) {
-      std::cerr << "Error opening file: " << filename << std::endl;
-      return;
-    }
+  // Error handling
+  FILE* file = fopen(filename.c_str(), "wb");
+  if (!file) {
+    std::cerr << "Error opening file: " << filename << std::endl;
+    return;
+  }
 
-    png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
-    if (!png) {
-      std::cerr << "Error creating PNG write struct" << std::endl;
-      fclose(file);
-      return;
-    }
+  png_structp png = png_create_write_struct(PNG_LIBPNG_VER_STRING, nullptr, nullptr, nullptr);
+  if (!png) {
+    std::cerr << "Error creating PNG write struct" << std::endl;
+    fclose(file);
+    return;
+  }
 
-    png_infop info = png_create_info_struct(png);
-    if (!info) {
-      std::cerr << "Error creating PNG info struct" << std::endl;
-      png_destroy_write_struct(&png, nullptr);
-      fclose(file);
-      return;
-    }
+  png_infop info = png_create_info_struct(png);
+  if (!info) {
+    std::cerr << "Error creating PNG info struct" << std::endl;
+    png_destroy_write_struct(&png, nullptr);
+    fclose(file);
+    return;
+  }
 
-    if (setjmp(png_jmpbuf(png))) {
-      std::cerr << "Error during PNG creation" << std::endl;
-      png_destroy_write_struct(&png, &info);
-      fclose(file);
-      return;
-    }
-
-    // Write image data to file
-    png_init_io(png, file);
-    png_set_IHDR(png, info, imageWidth, imageHeight, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
-    png_write_info(png, info);
-    png_write_image(png, rowPointers);
-    png_write_end(png, nullptr);
-
-    // Clean up memory
-    for (int i = 0; i < imageHeight; i++) {
-      delete[] rowPointers[i];
-    }
-    delete[] rowPointers;
-
+  if (setjmp(png_jmpbuf(png))) {
+    std::cerr << "Error during PNG creation" << std::endl;
     png_destroy_write_struct(&png, &info);
     fclose(file);
+    return;
   }
+
+  // Write image data to file
+  png_init_io(png, file);
+  png_set_IHDR(png, info, imageWidth, imageHeight, 8, PNG_COLOR_TYPE_RGB, PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_DEFAULT, PNG_FILTER_TYPE_DEFAULT);
+  png_write_info(png, info);
+  png_write_image(png, rowPointers);
+  png_write_end(png, nullptr);
+
+  // Clean up memory
+  for (int i = 0; i < imageHeight; i++) {
+    delete[] rowPointers[i];
+  }
+  delete[] rowPointers;
+
+  png_destroy_write_struct(&png, &info);
+  fclose(file);
+}
