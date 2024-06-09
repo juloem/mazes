@@ -45,14 +45,14 @@
  * a Grid object.
  */
 class Sidewinder {
-public:
+ public:
     /**
    * Generates a maze using the Sidewinder algorithm on the given grid.
    *
    * @param grid The grid on which the maze is generated.
    * @return The grid with the generated maze.
    */
-  static Grid on(Grid grid);
+  static Grid on(Grid *grid);
 };
 
 #endif // SIDEWINDER_HPP

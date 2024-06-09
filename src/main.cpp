@@ -22,8 +22,10 @@
  * SOFTWARE.
  */
 
+#include <chrono>
+
 #include "binary_tree.cpp"
-#include "sidewinder.cpp"
+#include "sidewinder.hpp"
 
 /**
  * @brief The main function of the program.
@@ -35,8 +37,8 @@
  */
 int main() {
   // Predetermined values for the maze
-  int rows = 2;
-  int columns = 2;
+  int rows = 25;
+  int columns = 25;
   int cellSize = 100;
   int wallSize = 10;
   std::string filename = "maze.png";
@@ -47,12 +49,20 @@ int main() {
 
   // BinaryTree::on(grid);
 
+  // Start the timer to measure the time taken to generate the maze
+  auto start = std::chrono::high_resolution_clock::now();
+
   // Generate a maze using the Sidewinder algorithm
-  ouput_grid = Sidewinder::on(grid);
+  ouput_grid = Sidewinder::on(&grid);
+
+  // Stop the timer
+  auto end = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double> elapsed = end - start;
 
   // Print the maze to the console and generate an image of the maze
   ouput_grid.to_s_v1();
   std::cout << "Sidewinder Algorithm finished successfully" << std::endl;
+  std::cout << "Time taken: " << elapsed.count() << " seconds" << std::endl;
   ouput_grid.generateImage(filename, cellSize, wallSize);
   std::cout << "Image generated successfully" << std::endl;
 
