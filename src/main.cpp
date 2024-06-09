@@ -49,11 +49,13 @@ int main() {
 
   // BinaryTree::on(grid);
 
+  // Start the timer to measure the time taken to generate the maze
   auto start = std::chrono::high_resolution_clock::now();
 
   // Generate a maze using the Sidewinder algorithm
   ouput_grid = Sidewinder::on(&grid);
 
+  // Stop the timer
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = end - start;
 
