@@ -24,9 +24,9 @@
 
 #include "sidewinder.hpp"
 
-Grid Sidewinder::on(Grid grid) {
+Grid Sidewinder::on(Grid *grid) {
   srand((unsigned int)time(NULL));
-  grid.eachRow([&](std::vector<Cell*>& row) {
+  (*grid).eachRow([&](std::vector<Cell*>& row) {
     std::vector<Cell*> run;
 
     for (Cell* cell : row) {
@@ -50,5 +50,5 @@ Grid Sidewinder::on(Grid grid) {
       }
     }
   });
-return grid;
+return *grid;
 }

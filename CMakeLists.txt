@@ -4,8 +4,13 @@ cmake_minimum_required(VERSION 3.11.3)
 # Set the C++ standard to C++17
 set(CMAKE_CXX_STANDARD 17)
 
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
 set(CMAKE_CXX_FLAGS_DEBUG "-g -DDEBUG")
 set(CMAKE_C_FLAGS_DEBUG "-g -DDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 # Set the project name to "Mazes"
 project(Mazes
