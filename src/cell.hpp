@@ -34,60 +34,60 @@
  */
 class Cell {
  private:
-    int row_; /**< The row index of the cell in the grid. */
-    int column_; /**< The column index of the cell in the grid. */
-    std::unordered_map<Cell*, bool> links_; /**< A map of linked cells and their link status. */
+   int row_; /**< The row index of the cell in the grid. */
+   int column_; /**< The column index of the cell in the grid. */
+   std::unordered_map<Cell*, bool> links_; /**< A map of linked cells and their link status. */
 
  public:
-    Cell* north_; /**< Pointer to the cell to the north of this cell. */
-    Cell* south_; /**< Pointer to the cell to the south of this cell. */
-    Cell* east_; /**< Pointer to the cell to the east of this cell. */
-    Cell* west_; /**< Pointer to the cell to the west of this cell. */
+   Cell* north_; /**< Pointer to the cell to the north of this cell. */
+   Cell* south_; /**< Pointer to the cell to the south of this cell. */
+   Cell* east_; /**< Pointer to the cell to the east of this cell. */
+   Cell* west_; /**< Pointer to the cell to the west of this cell. */
 
-    /**
-     * @brief Constructs a new Cell object.
-     * @param row The row index of the cell in the grid.
-     * @param column The column index of the cell in the grid.
-     */
-    Cell(int row, int column);
+   /**
+    * @brief Constructs a new Cell object.
+    * @param row The row index of the cell in the grid.
+    * @param column The column index of the cell in the grid.
+    */
+   Cell(int row, int column);
 
-    /**
-     * @brief Destroys the Cell object.
-     */
-    ~Cell();
+   /**
+    * @brief Destroys the Cell object.
+    */
+   ~Cell();
 
-    /**
-     * @brief Links this cell to another cell.
-     * @param cell The cell to be linked.
-     * @param bidi Flag indicating whether the link should be bidirectional (default: true).
-     */
-    void link(Cell* cell, bool bidi = true);
+   /**
+    * @brief Links this cell to another cell.
+    * @param cell The cell to be linked.
+    * @param bidi Flag indicating whether the link should be bidirectional (default: true).
+    */
+   void link(Cell* cell, bool bidi = true);
 
-    /**
-     * @brief Unlinks this cell from another cell.
-     * @param cell The cell to be unlinked.
-     * @param bidi Flag indicating whether the unlink should be bidirectional (default: true).
-     */
-    void unlink(Cell* cell, bool bidi = true);
+   /**
+    * @brief Unlinks this cell from another cell.
+    * @param cell The cell to be unlinked.
+    * @param bidi Flag indicating whether the unlink should be bidirectional (default: true).
+    */
+   void unlink(Cell* cell, bool bidi = true);
 
-    /**
-     * @brief Returns a vector of cells that are linked to this cell.
-     * @return A vector of linked cells.
-     */
-    std::vector<Cell*> getLinks();
+   /**
+    * @brief Returns a vector of cells that are linked to this cell.
+    * @return A vector of linked cells.
+    */
+   std::vector<Cell*> getLinks();
 
-    /**
-     * @brief Checks if this cell is linked to another cell.
-     * @param cell The cell to check for a link.
-     * @return True if the cells are linked, false otherwise.
-     */
-    bool isLinked(Cell* cell);
+   /**
+    * @brief Checks if this cell is linked to another cell.
+    * @param cell The cell to check for a link.
+    * @return True if the cells are linked, false otherwise.
+    */
+   bool isLinked(Cell* cell);
 
-    /**
-     * @brief Returns a vector of neighboring cells of this cell.
-     * @return A vector of neighboring cells.
-     */
-    std::vector<Cell*> getNeighbors();
+   /**
+    * @brief Returns a vector of neighboring cells of this cell.
+    * @return A vector of neighboring cells.
+    */
+   std::vector<Cell*> getNeighbors();
 };
 
 #endif  // SRC_CELL_HPP

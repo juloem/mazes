@@ -25,7 +25,7 @@
 #include <chrono>
 
 #include "binary_tree.cpp"
-#include "sidewinder.cpp"
+#include "sidewinder.hpp"
 
 /**
  * @brief The main function of the program.
