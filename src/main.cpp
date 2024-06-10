@@ -24,6 +24,7 @@
 
 #include <chrono>
 
+#include "aldous_broder.hpp"
 #include "binary_tree.cpp"
 #include "sidewinder.hpp"
 
@@ -37,15 +38,15 @@
  */
 int main() {
   // Predetermined values for the maze
-  int rows = 10;
-  int columns = 10;
+  int rows = 5;
+  int columns = 5;
   int cellSize = 200;
   int wallSize = 10;
   std::string filename = "maze.png";
 
   // Create a grid of size rowsxcolumns
   Grid grid(rows, columns);
-  Grid ouput_grid(rows, columns);
+  Grid output_grid(rows, columns);
 
   // BinaryTree::on(grid);
 
@@ -53,17 +54,20 @@ int main() {
   auto start = std::chrono::high_resolution_clock::now();
 
   // Generate a maze using the Sidewinder algorithm
-  ouput_grid = Sidewinder::on(&grid);
+  //ouptut_grid = Sidewinder::on(&grid);
+
+  // Generate a maze using the Aldous-Broder algorithm
+  output_grid = AldousBroder::on(&grid);
 
   // Stop the timer
   auto end = std::chrono::high_resolution_clock::now();
   std::chrono::duration<double> elapsed = end - start;
 
   // Print the maze to the console and generate an image of the maze
-  ouput_grid.to_s_v1();
-  std::cout << "Sidewinder Algorithm finished successfully" << std::endl;
+  output_grid.to_s_v1();
+  std::cout << "Maze Algorithm finished successfully" << std::endl;
   std::cout << "Time taken: " << elapsed.count() << " seconds" << std::endl;
-  ouput_grid.generateImage(filename, cellSize, wallSize);
+  output_grid.generateImage(filename, cellSize, wallSize);
   std::cout << "Image generated successfully" << std::endl;
 
   return 0;

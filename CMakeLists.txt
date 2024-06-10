@@ -30,11 +30,13 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
 
 # Add MazeLib as library
 add_library(MazeLib
+  src/aldous_broder.hpp
+  src/aldous_broder.cpp
+  src/binary_tree.cpp
   src/cell.hpp
   src/cell.cpp
   src/grid.hpp
   src/grid.cpp
-  src/binary_tree.cpp
   src/sidewinder.hpp
   src/sidewinder.cpp
 )
