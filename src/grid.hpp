@@ -109,7 +109,7 @@ class Grid {
      * @param rowPointers The array of row pointers representing the grid.
      * @param isVertical Indicates whether the wall is vertical or horizontal.
      */
-    void drawWall(int x1, int x2, int y1, int y2, int wallSize, png_bytep* rowPointers, bool isVertical);
+    void drawWall(int x1, int x2, int y1, int y2, int wallSize, int cellSize, png_bytep* rowPointers, bool isVertical);
 
     /**
      * @brief Generates a PNG image of the grid.

@@ -37,9 +37,9 @@
  */
 int main() {
   // Predetermined values for the maze
-  int rows = 25;
-  int columns = 25;
-  int cellSize = 100;
+  int rows = 10;
+  int columns = 10;
+  int cellSize = 200;
   int wallSize = 10;
   std::string filename = "maze.png";
 

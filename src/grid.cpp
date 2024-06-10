@@ -115,26 +115,30 @@ std::string Grid::to_s_v1() {
   return output;
 }
 
-void Grid::drawWall(int x1, int x2, int y1, int y2, int wallSize, png_bytep* rowPointers, bool isVertical) {
-    if (isVertical) {
-        for (int y = y1; y < y2; y++) {
-            for (int t = 0; t < wallSize; t++) {
-                if (x1 - t >= 0) {
-                    rowPointers[y][(x1 - t - 1) * 3] = 0;
-                    rowPointers[y][(x1 - t - 1) * 3 + 1] = 0;
-                    rowPointers[y][(x1 - t - 1) * 3 + 2] = 0;
-                }
-            }
+void Grid::drawWall(int x1, int x2, int y1, int y2, int wallSize, int cellSize, png_bytep* rowPointers, bool isVertical) {
+  if (isVertical) {
+    for (int y = y1; y < y2; y++) {
+      for (int t = 0; t < wallSize; t++) {
+        if (x1 - t >= 0) {
+          rowPointers[y][(x1 - t -1) * 3] = 0;
+          rowPointers[y][(x1 - t -1) * 3 + 1] = 0;
+          rowPointers[y][(x1 - t -1) * 3 + 2] = 0;
         }
-    } else {
-        for (int x = x1; x < x2; x++) {
-            for (int t = 0; t < wallSize; t++) {
-                rowPointers[y1 + t][x * 3] = 0;
-                rowPointers[y1 + t][x * 3 + 1] = 0;
-                rowPointers[y1 + t][x * 3 + 2] = 0;
-            }
-        }
+      }
     }
+  }
+  else {
+    for (int x = x1; x < x2; x++) {
+      for (int t = 0; t < wallSize; t++) {
+        if (x >= columns * cellSize) {
+          break;
+        }
+        rowPointers[y1 + t][x * 3] = 0;
+        rowPointers[y1 + t][x * 3 + 1] = 0;
+        rowPointers[y1 + t][x * 3 + 2] = 0;
+      }
+    }
+  }
 }
 
 void Grid::generateImage(const std::string& filename, int cellSize, int wallSize) {
@@ -157,21 +161,22 @@ void Grid::generateImage(const std::string& filename, int cellSize, int wallSize
       int y2 = (row + 1) * cellSize;
 
       if (!cell->isLinked(cell->north_)) {
-        drawWall(x1, x2, y1, y1 + wallSize, wallSize, rowPointers, false);
+        //drawWall(x1, x2, y1, y1 + wallSize, wallSize, rowPointers, false);
+        drawWall(x1, x2 + wallSize, y1, y2, wallSize, cellSize, rowPointers, false);
       }
 
       if (!cell->isLinked(cell->west_)) {
-        drawWall(x1, x1 + wallSize, y1, y2, wallSize, rowPointers, true);
+        drawWall(x1 + wallSize, x1, y1, y2, wallSize, cellSize, rowPointers, true);
       }
 
       // Draw east wall only if it's the last column and if the cell is not linked to its eastern neighbor
       if (column == columns - 1 && !cell->isLinked(cell->east_)) {
-        drawWall(x2, x2, y1, y2, wallSize, rowPointers, true);
+        drawWall(x2, x2, y1, y2, wallSize, cellSize, rowPointers, true);
       }
 
       // Draw south wall only if it's the last row and if the cell is not linked to its southern neighbor
       if (row == rows - 1 && !cell->isLinked(cell->south_)) {
-        drawWall(x1, x2, y2 - wallSize, y2, wallSize, rowPointers, false);
+        drawWall(x1, x2, y2 - wallSize, y2, wallSize, cellSize, rowPointers, false);
       }
     }
   }
