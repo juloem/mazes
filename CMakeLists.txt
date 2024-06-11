@@ -39,6 +39,8 @@ add_library(MazeLib
   src/grid.cpp
   src/sidewinder.hpp
   src/sidewinder.cpp
+  src/wilsons.hpp
+  src/wilsons.cpp
 )
 
 # Include the libpng headers

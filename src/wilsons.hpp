@@ -22,40 +22,33 @@
  * SOFTWARE.
  */
 
-#ifndef ALDOUS_BRODER_HPP
-#define ALDOUS_BRODER_HPP
+#ifndef WILSONS_HPP
+#define WILSONS_HPP
 
 #include <vector>
-#include <algorithm>
 
 #include "grid.hpp"
 
 /**
- * @class AldousBroder
- * @brief Class representing the Aldous-Broder algorithm for generating mazes.
+ * @class Wilsons
+ * @brief Represents a Wilson's maze generation algorithm.
  *
- * The Aldous-Broder algorithm is a maze generation algorithm that generates a maze by
- * performing a random walk through the grid until all cells have been visited.
- * It works by selecting a random cell as the starting point and then moving to a random
- * neighboring cell. If the neighboring cell has not been visited, the algorithm carves a
- * passage between the current cell and the neighboring cell. This process continues until
- * all cells have been visited.
- *
- * The AldousBroder class provides a static method `on` that takes a Grid object as input
- * and generates a maze using the Aldous-Broder algorithm. The generated maze is returned
- * as a Grid object.
+ * The Wilsons class provides a static method `on` that generates a Wilson's maze
+ * on a given grid. The algorithm starts with a grid where all cells are unvisited.
+ * It then selects a random cell and marks it as visited. It then selects a random
+ * unvisited cell and performs a loop erased random walk until it reaches a visited
+ * cell. The path taken during the walk is then marked as part of the maze. This
+ * process is repeated until all cells are visited.
  */
-class AldousBroder {
+class Wilsons {
  public:
-    /**
-    * Generates a maze using the Aldous-Broder algorithm on the given grid.
-    *
-    * @param grid The grid on which the maze is generated.
-    * @return The grid with the generated maze.
-    */
-    static Grid on(Grid *grid);
- //private:
-    //Cell unvisited_cells;
-  };
+  /**
+   * Generates a Wilson's maze on the given grid.
+   *
+   * @param grid The grid on which the maze is generated.
+   * @return The grid with the generated maze.
+   */
+  static Grid on(Grid* grid);
+};
 
-#endif // ALDOUS_BRODER_HPP
+#endif  // WILSONS_HPP

@@ -22,11 +22,14 @@
  * SOFTWARE.
  */
 
+#include <iostream>
+#include <string>
 #include <chrono>
 
 #include "aldous_broder.hpp"
 #include "binary_tree.cpp"
 #include "sidewinder.hpp"
+#include "wilsons.hpp"
 
 /**
  * @brief The main function of the program.
@@ -36,15 +39,37 @@
  *
  * @return 0 indicating successful execution of the program.
  */
-int main() {
-  // Predetermined values for the maze
+int main(int argc, char** argv) {
+  // Default values for the maze
   int rows = 5;
   int columns = 5;
-  int cellSize = 200;
+  int cellSize = 100;
   int wallSize = 10;
+  std::string algorithm = "AldousBroder";
   std::string filename = "maze.png";
 
-  // Create a grid of size rowsxcolumns
+  // Check if arguments are provided
+  if (argc > 1) {
+    if (argc < 4) {
+      std::cout << "Usage: " << argv[0] << " [rows] [columns] [algorithm]" << std::endl;
+      std::cout << "If no arguments are provided, the default values are used (5 5 AldousBroder)." << std::endl;
+      std::cerr << "Valid algorithms are: BinaryTree, Sidewinder, AldousBroder, Wilsons" << std::endl;
+      return 1;
+    }
+    try {
+      rows = std::stoi(argv[1]);
+      columns = std::stoi(argv[2]);
+    } catch (std::invalid_argument& e) {
+      std::cerr << "Invalid arguments. Rows and columns must be integers." << std::endl;
+      std::cout << "Usage: " << argv[0] << " [rows] [columns] [algorithm]" << std::endl;
+      std::cout << "If no arguments are provided, the default values are used (5 5 AldousBroder)." << std::endl;
+      std::cerr << "Valid algorithms are: BinaryTree, Sidewinder, AldousBroder, Wilsons" << std::endl;
+      return 1;
+    }
+    algorithm = argv[3];
+  }
+
+  // Create a grid of size defined by rows and columns
   Grid grid(rows, columns);
   Grid output_grid(rows, columns);
 
@@ -53,11 +78,20 @@ int main() {
   // Start the timer to measure the time taken to generate the maze
   auto start = std::chrono::high_resolution_clock::now();
 
-  // Generate a maze using the Sidewinder algorithm
-  //ouptut_grid = Sidewinder::on(&grid);
-
-  // Generate a maze using the Aldous-Broder algorithm
-  output_grid = AldousBroder::on(&grid);
+  // Generate a maze using the chosen algorithm
+  if (algorithm == "BinaryTree") {
+    output_grid = BinaryTree::on(grid);
+  } else if (algorithm == "Sidewinder") {
+    output_grid = Sidewinder::on(&grid);
+  } else if (algorithm == "AldousBroder") {
+    output_grid = AldousBroder::on(&grid);
+  } else if (algorithm == "Wilsons") {
+    output_grid = Wilsons::on(&grid);
+  } else {
+    std::cerr << "Invalid algorithm name. Usage: " << argv[0] << " [algorithm] [rows] [columns]" << std::endl;
+    std::cerr << "Valid algorithms are: BinaryTree, Sidewinder, AldousBroder, Wilsons" << std::endl;
+    return 1;
+  }
 
   // Stop the timer
   auto end = std::chrono::high_resolution_clock::now();
